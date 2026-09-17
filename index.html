@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Create your 8-bit Derby Band Avatar." />
+    <title>Derby Band Avatar Builder</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="site-header">
+        <div class="brand" aria-label="Derby Character Cash">
+          <span class="brand-mark" aria-hidden="true">♪</span>
+          <span><strong>DERBY</strong><small>CHARACTER CASH</small></span>
+        </div>
+        <div>
+          <p class="eyebrow">STUDENT CREATOR</p>
+          <h1>Build Your Band Avatar</h1>
+        </div>
+      </header>
+
+      <section class="builder" aria-label="Avatar builder">
+        <aside class="preview-panel">
+          <div class="avatar-stage">
+            <canvas id="avatarCanvas" width="64" height="64" aria-label="Your current band avatar preview"></canvas>
+          </div>
+          <div class="preview-caption">Your avatar preview</div>
+          <div class="card-preview-wrap">
+            <p>How it will look on the board</p>
+            <div class="mini-card"><canvas id="miniCanvas" width="64" height="64" aria-label="Small avatar card preview"></canvas></div>
+          </div>
+        </aside>
+
+        <section class="controls-panel">
+          <div class="tabs" role="tablist" aria-label="Avatar choices">
+            <button class="tab is-active" role="tab" aria-selected="true" aria-controls="choices" data-tab="skin">Skin</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="hair">Hair</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="shirt">Shirt</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="instrument">Instrument</button>
+            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="background">Background</button>
+          </div>
+          <div class="choice-heading"><h2 id="choiceTitle">Choose a skin tone</h2><p id="choiceHelp">Pick the tone that feels most like you.</p></div>
+          <div id="choices" class="choices" role="tabpanel" aria-live="polite"></div>
+
+          <div class="actions">
+            <div class="secondary-actions">
+              <button id="randomizeBtn" class="soft-button" type="button">↻ Randomize look</button>
+              <button id="undoBtn" class="soft-button" type="button" disabled>↶ Undo</button>
+              <button id="resetBtn" class="text-button" type="button">Start over</button>
+            </div>
+            <button id="downloadBtn" class="download-button" type="button">⇩ Download avatar</button>
+            <p class="submission-note">Download your avatar, then attach the PNG to your Google Classroom assignment.</p>
+            <p id="status" class="status" role="status"></p>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
