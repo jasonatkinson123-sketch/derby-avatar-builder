@@ -20,7 +20,21 @@ Facial features were separated into a contrast layer after the initial small-car
 
 ## Browser verification
 
-Browser results will be recorded here after the proof branch is available through a non-production preview URL.
+**Blocked; not claimed as complete.** The proof branch was published without merging into `main`, then two independent real-browser routes were attempted:
+
+1. The provided cloud Chrome browser timed out while opening both the commit-pinned RawGitHack preview and an HTMLPreview route. It could not reach a usable page for interaction.
+2. The local Playwright package was available, but its Chromium executable was not installed. Playwright's supported browser download failed from `cdn.playwright.dev` with HTTP 502 / connection refused.
+
+Because no real browser could load the proof, the interaction, responsive-layout, accessibility, console, and browser-generated PNG checks remain unverified. The required browser gate therefore did not pass, and this proof must not be merged or deployed to production yet.
+
+The checks that did complete were:
+
+- JavaScript syntax validation with `node --check app.js`
+- `git diff --check`
+- Manifest/path completeness for all 29 runtime PNG layers
+- Image format and dimension validation for every runtime asset
+- Deterministic rendering and reopening of twelve cross-combinations at 128, 96, and 64 pixels
+- Manual visual inspection of the twelve-combination contact sheet and the 64-pixel sheet
 
 ## Visible proof limitations
 
