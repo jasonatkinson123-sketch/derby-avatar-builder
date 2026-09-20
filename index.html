@@ -56,6 +56,16 @@
         </section>
       </section>
     </main>
+    <dialog id="resetDialog" class="reset-dialog" aria-labelledby="resetTitle" aria-describedby="resetDescription">
+      <form method="dialog">
+        <h2 id="resetTitle">Start over?</h2>
+        <p id="resetDescription">This will restore the default avatar.</p>
+        <div class="dialog-actions">
+          <button class="soft-button" value="cancel" type="submit">Keep editing</button>
+          <button id="confirmResetBtn" class="confirm-reset-button" value="confirm" type="button">Start over</button>
+        </div>
+      </form>
+    </dialog>
     <script src="app.js"></script>
   </body>
 </html>

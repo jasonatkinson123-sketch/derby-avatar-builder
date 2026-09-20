@@ -10,6 +10,7 @@
   const choiceHelp = document.getElementById('choiceHelp');
   const status = document.getElementById('status');
   const undoBtn = document.getElementById('undoBtn');
+  const resetDialog = document.getElementById('resetDialog');
 
   const skins = [
     ['Porcelain', '#f7d6bd'], ['Peach', '#f3bd94'], ['Golden', '#d99a67'], ['Warm brown', '#b86e45'],
@@ -194,7 +195,8 @@
   });
   document.getElementById('randomizeBtn').addEventListener('click',()=>{history.push({...state});state.skin=Math.floor(Math.random()*skins.length);state.hair=Math.floor(Math.random()*hairs.length);state.shirt=Math.floor(Math.random()*shirts.length);state.background=Math.floor(Math.random()*backgrounds.length);status.textContent='A new look is ready. Your instrument stayed the same.';status.className='status';render();renderChoices();});
   undoBtn.addEventListener('click',()=>{if(history.length){state=history.pop();status.textContent='Your last change was undone.';status.className='status';render();renderChoices();}});
-  document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('Start over with the default avatar?')){history.push({...state});state={skin:3,hair:0,shirt:0,instrument:5,background:0};status.textContent='You are back to the default avatar.';status.className='status';render();renderChoices();}});
+  document.getElementById('resetBtn').addEventListener('click',()=>resetDialog.showModal());
+  document.getElementById('confirmResetBtn').addEventListener('click',()=>{history.push({...state});state={skin:3,hair:0,shirt:0,instrument:5,background:0};status.textContent='You are back to the default avatar.';status.className='status';resetDialog.close();render();renderChoices();});
   document.getElementById('downloadBtn').addEventListener('click',()=>{try{const out=document.createElement('canvas');out.width=512;out.height=512;const o=out.getContext('2d');if(!o)throw new Error('Canvas is unavailable.');o.imageSmoothingEnabled=false;o.drawImage(canvas,0,0,512,512);out.toBlob(blob=>{if(!blob){status.textContent='Sorry—your avatar could not be downloaded. Please try again.';status.className='status error';return;}const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='band-avatar.png';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),500);status.textContent='Downloaded! Attach band-avatar.png to your Google Classroom assignment.';status.className='status';},'image/png');}catch(err){status.textContent='Sorry—your avatar could not be downloaded. Please try again.';status.className='status error';}});
   render();renderChoices();
 })();
