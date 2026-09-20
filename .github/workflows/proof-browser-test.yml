@@ -1,0 +1,55 @@
+name: Proof browser verification
+
+on:
+  push:
+    branches:
+      - codex/verify-avatar-builder
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-proof:
+    if: github.ref == 'refs/heads/codex/verify-avatar-builder'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out proof branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser-test dependency
+        run: npm install --no-save playwright@1.55.0
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start static proof server
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 > /tmp/avatar-proof-server.log 2>&1 &
+          for attempt in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/avatar-proof-server.log
+          exit 1
+
+      - name: Run real-browser proof suite
+        run: node tests/proof-browser.mjs
+
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: avatar-builder-browser-proof
+          path: browser-proof/
+          if-no-files-found: warn
+          retention-days: 14
