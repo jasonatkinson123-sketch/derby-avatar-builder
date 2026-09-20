@@ -50,6 +50,7 @@
   function rect(c, x,y,w,h,fill,outline) { px(c,x,y,w,h,fill); if(outline){ px(c,x,y,w,1,outline);px(c,x,y+h-1,w,1,outline);px(c,x,y,1,h,outline);px(c,x+w-1,y,1,h,outline); } }
   function line(c,x1,y1,x2,y2,color,width=1){ c.strokeStyle=color;c.lineWidth=width;c.beginPath();c.moveTo(x1+.5,y1+.5);c.lineTo(x2+.5,y2+.5);c.stroke(); }
   function circle(c,x,y,r,fill){c.fillStyle=fill;c.beginPath();c.arc(x+.5,y+.5,r,0,Math.PI*2);c.fill();}
+  function poly(c,points,fill,outline){c.fillStyle=fill;c.beginPath();c.moveTo(points[0][0]+.5,points[0][1]+.5);points.slice(1).forEach(([x,y])=>c.lineTo(x+.5,y+.5));c.closePath();c.fill();if(outline){c.strokeStyle=outline;c.lineWidth=1;c.stroke();}}
   function currentSkin(){ return skins[state.skin][1]; }
   function contrast(hex){ const n=parseInt(hex.slice(1),16), r=n>>16,g=(n>>8)&255,b=n&255; return (r*299+g*587+b*114)/1000>145 ? '#553a2d' : '#f8d8bd'; }
 
@@ -83,25 +84,87 @@
     rect(c,17,13,30,24,skin,shadow);rect(c,19,31,26,8,skin,shadow);
     px(c,23,24,2,3,'#192233');px(c,39,24,2,3,'#192233');line(c,28,31,36,31,'#6a3d39',1);
     drawHair(c,hairs[state.hair][1],hairColors[state.hair%hairColors.length],skin);
-    // hands always visibly update with skin tone
-    rect(c,12,51,7,7,skin,shadow);rect(c,45,51,7,7,skin,shadow);
   }
 
-  function brass(c,x,y,kind){const gold='#f8c431',hi='#fff1aa',dark='#754417'; if(kind==='trumpet'){line(c,x,y+4,x+23,y+4,gold,4);rect(c,x+17,y,5,8,gold,dark);line(c,x+7,y+1,x+7,y+8,dark,1);line(c,x+11,y+1,x+11,y+8,dark,1);return;}if(kind==='trombone'){line(c,x,y+5,x+29,y+5,gold,3);line(c,x+8,y+2,x+8,y+13,gold,2);line(c,x+29,y+1,x+29,y+11,gold,2);line(c,x+12,y+12,x+30,y+12,gold,2);rect(c,x+28,y,7,13,gold,dark);return;}if(kind==='horn'){circle(c,x+17,y+9,9,gold);circle(c,x+17,y+9,5,'#7e4a16');line(c,x+6,y+3,x+20,y+16,gold,2);line(c,x+7,y+13,x+22,y+3,gold,2);return;}if(kind==='tuba'||kind==='euphonium'){rect(c,x+10,y+6,12,19,gold,dark);rect(c,x+8,y,16,9,gold,dark);rect(c,x+6,y,20,4,hi,dark);line(c,x+11,y+7,x+4,y+13,gold,2);line(c,x+4,y+13,x+4,y+22,gold,2);return;}}
-  function woodwind(c,x,y,kind){const dark='#1e2530',silver='#eaf2f7',key='#bec9d2';let col=dark,w=3,h=30;if(kind==='flute'){col=silver;w=3;h=33;line(c,x,y+2,x+32,y+2,col,3);for(let i=0;i<5;i++)circle(c,x+10+i*4,y+2,1,dark);return;}if(kind==='bassoon'){col='#a86632';w=5;h=32;line(c,x+5,y,x+5,y+h,col,w);line(c,x+5,y+h,x+13,y+h+6,col,2);return;}if(kind==='oboe'){col='#422d28';w=3;h=31;}if(kind==='clarinet'){col='#1f2229';w=4;h=32;}if(kind==='bassClarinet'){col='#22262d';w=5;h=35;}line(c,x,y,x+6,y+h,col,w);for(let i=0;i<6;i++)circle(c,x+1+i,y+5+i*4,1,key);if(kind==='bassClarinet'){line(c,x+6,y+h,x+12,y+h+3,silver,2);line(c,x+12,y+h+3,x+12,y+h+8,silver,2);}}
-  function sax(c,x,y,size){const gold='#e9ad25',dark='#6e4317';line(c,x+5,y,x+5,y+size,gold,5);line(c,x+5,y+size,x+15,y+size+4,gold,5);circle(c,x+17,y+size+4,5,gold);circle(c,x+17,y+size+4,2,dark);line(c,x+4,y+2,x-1,y-5,gold,2);for(let i=0;i<4;i++)circle(c,x+7,y+8+i*5,1,'#fff1a3');}
-  function drawInstrument(c, kind){const skin=currentSkin(); // instruments overlap body, no face obstruction
-    if(kind==='flute'){woodwind(c,16,45,'flute');line(c,14,49,47,49,'#eaf2f7',3);return;}
-    if(kind==='oboe'||kind==='clarinet'||kind==='bassoon'||kind==='bassClarinet'){woodwind(c,31,38,kind);return;}
-    if(kind==='altoSax'){sax(c,31,38,16);return;}if(kind==='tenorSax'){sax(c,30,36,20);return;}if(kind==='bariSax'){sax(c,28,34,25);return;}
-    if(kind==='trumpet'||kind==='trombone'||kind==='horn'||kind==='tuba'||kind==='euphonium'){brass(c,kind==='tuba'||kind==='euphonium'?23:16,43,kind);return;}
-    if(kind==='bass'){const b='#c65345',dark='#442432';line(c,17,36,45,58,dark,3);rect(c,27,48,20,8,b,dark);rect(c,42,38,4,16,'#d6b06a',dark);line(c,43,37,58,30,'#d6b06a',3);for(let i=0;i<4;i++)line(c,43,40+i*2,58,33+i*2,'#eef2f2',1);return;}
-    if(kind==='drums'){circle(c,33,55,11,'#3d75b8');circle(c,33,55,8,'#d7e6ef');line(c,21,39,34,48,'#c88c4f',2);line(c,44,39,34,48,'#c88c4f',2);line(c,23,57,20,64,'#354b68',2);line(c,42,57,45,64,'#354b68',2);return;}
-    if(kind==='bells'){rect(c,16,51,31,8,'#465b70','#172b46');for(let i=0;i<7;i++)rect(c,18+i*4,52,3,3,i%2?'#f4b629':'#b7d2d7','#172b46');line(c,27,46,21,52,'#c78a4e',2);line(c,39,46,35,52,'#c78a4e',2);circle(c,26,45,2,'#f0b737');circle(c,40,45,2,'#f0b737');return;}
+  function brass(c,kind){
+    const gold='#f5b82e',hi='#ffe59a',dark='#6d4218';
+    if(kind==='trumpet'){
+      line(c,18,46,46,46,gold,4);poly(c,[[45,40],[56,43],[56,50],[45,53]],gold,dark);
+      rect(c,27,42,3,8,gold,dark);rect(c,32,42,3,8,gold,dark);rect(c,37,42,3,8,gold,dark);
+      return;
+    }
+    if(kind==='trombone'){
+      poly(c,[[16,43],[24,46],[24,51],[16,54]],gold,dark);line(c,23,48,52,48,gold,3);
+      line(c,30,43,30,58,gold,2);line(c,30,58,53,58,gold,2);line(c,53,48,53,58,gold,2);line(c,38,46,38,53,dark,1);
+      return;
+    }
+    if(kind==='horn'){
+      circle(c,34,50,12,gold);circle(c,34,50,7,dark);circle(c,34,50,4,'#fff1b5');
+      line(c,20,42,43,59,gold,3);line(c,21,58,45,41,gold,3);poly(c,[[18,42],[11,38],[11,49],[18,48]],gold,dark);
+      return;
+    }
+    const isTuba=kind==='tuba', x=isTuba?19:23, y=isTuba?36:40, w=isTuba?27:22, h=isTuba?28:23;
+    poly(c,[[x+4,y+7],[x+w-5,y+7],[x+w-2,y+h-4],[x+7,y+h],[x,y+h-7]],gold,dark);
+    poly(c,[[x+2,y+7],[x-2,y],[x+w+1,y],[x+w-3,y+7]],hi,dark);
+    line(c,x+8,y+8,x+8,y+h-3,dark,2);line(c,x+15,y+8,x+15,y+h-5,dark,2);line(c,x+5,y+11,x-3,y+17,gold,3);
+  }
+  function woodwind(c,kind){
+    const black='#22252c',brown='#9a552c',silver='#dfe9ef',key='#f5f7f8';
+    if(kind==='flute'){
+      line(c,14,48,52,48,silver,4);rect(c,13,45,4,7,silver,'#637486');for(let x=24;x<48;x+=5)circle(c,x,48,1,'#526475');return;
+    }
+    if(kind==='bassoon'){
+      line(c,27,38,36,61,brown,6);line(c,36,61,42,63,'#c9d4da',2);line(c,28,39,34,35,silver,2);rect(c,25,38,5,5,brown,'#4f301e');
+      for(let i=0;i<5;i++)circle(c,31+i,45+i*3,1,key);return;
+    }
+    const isBass=kind==='bassClarinet', isOboe=kind==='oboe', col=isOboe?'#4b3027':black;
+    const x=isBass?29:31,y=isBass?35:38,h=isBass?28:24,w=isBass?5:(isOboe?3:4);
+    poly(c,[[x,y],[x+w,y],[x+w+7,y+h],[x+5,y+h+3],[x-1,y+h]],col,'#111922');
+    for(let i=0;i<5;i++)circle(c,x+3+i,y+6+i*4,1,key);
+    if(isBass){line(c,x+7,y+h,x+15,y+h+2,silver,2);poly(c,[[x+13,y+h],[x+21,y+h-2],[x+21,y+h+5],[x+14,y+h+4]],silver,'#54606c');}
+    else poly(c,[[x+3,y+h],[x+10,y+h+4],[x+1,y+h+5]],col,'#111922');
+  }
+  function sax(c,kind){
+    const sizes={altoSax:[31,38,16],tenorSax:[29,36,20],bariSax:[27,33,25]},[x,y,size]=sizes[kind];
+    const gold='#e8aa24',hi='#ffe48a',dark='#704516';
+    line(c,x+5,y,x+5,y+size,gold,6);line(c,x+5,y+size,x+16,y+size+3,gold,6);circle(c,x+19,y+size+3,6,gold);circle(c,x+19,y+size+3,3,dark);
+    line(c,x+4,y+2,x-2,y-5,gold,2);for(let i=0;i<4;i++)circle(c,x+8,y+8+i*5,1,hi);
+    if(kind==='bariSax')line(c,x+1,y+8,x-5,y+18,gold,2);
+  }
+  function drawInstrument(c,kind){
+    if(['flute','oboe','bassoon','clarinet','bassClarinet'].includes(kind)){woodwind(c,kind);return;}
+    if(['altoSax','tenorSax','bariSax'].includes(kind)){sax(c,kind);return;}
+    if(['trumpet','trombone','horn','tuba','euphonium'].includes(kind)){brass(c,kind);return;}
+    if(kind==='bass'){
+      const body='#c84f49',bodyHi='#ea7666',dark='#3a2930',wood='#c89558';
+      line(c,17,36,45,58,dark,3);circle(c,31,53,8,body);circle(c,42,52,7,body);rect(c,30,47,14,12,body,dark);rect(c,31,48,5,4,bodyHi);
+      line(c,40,47,55,31,wood,5);poly(c,[[53,29],[61,27],[61,34],[55,35]],wood,dark);
+      for(let i=0;i<4;i++)line(c,39,45+i,59,29+i,'#49372b',1);for(let i=0;i<4;i++)line(c,48+i*3,36-i*3,50+i*3,38-i*3,dark,1);
+      rect(c,38,50,3,7,'#f4d99b',dark);return;
+    }
+    if(kind==='drums'){
+      circle(c,33,55,11,'#376fae');circle(c,33,55,8,'#d7e6ef');circle(c,33,55,6,'#f7fafc');
+      line(c,22,39,32,49,'#bf8247',2);line(c,44,39,34,49,'#bf8247',2);rect(c,22,52,22,3,'#213b5c');return;
+    }
+    if(kind==='bells'){
+      poly(c,[[15,50],[49,50],[45,61],[18,61]],'#41586e','#172b46');
+      for(let i=0;i<8;i++)rect(c,18+i*4,52,3,5,i%2?'#f4bd36':'#c6d9df','#172b46');
+      line(c,25,44,20,53,'#bd7e43',2);line(c,40,44,36,53,'#bd7e43',2);circle(c,25,43,2,'#f0b737');circle(c,40,43,2,'#f0b737');return;
+    }
+  }
+  function drawHands(c,kind){
+    const skin=currentSkin(),shadow=contrast(skin);let hands;
+    if(['flute','trumpet','trombone'].includes(kind))hands=[[20,46],[40,46]];
+    else if(['oboe','clarinet','bassoon','bassClarinet','altoSax','tenorSax','bariSax'].includes(kind))hands=[[26,43],[38,52]];
+    else if(['horn','euphonium','tuba'].includes(kind))hands=[[20,48],[42,50]];
+    else if(kind==='bass')hands=[[42,38],[28,50]];
+    else if(kind==='drums')hands=[[18,40],[42,40]];
+    else hands=[[22,45],[38,45]];
+    hands.forEach(([x,y])=>rect(c,x,y,6,6,skin,shadow));
   }
   function drawAvatar(c){const bg=backgrounds[state.background][1];rect(c,0,0,64,64,bg); // sparse decorative pixels
     px(c,5,11,2,2,'#ffffff66');px(c,55,12,3,1,'#ffffff66');px(c,7,37,1,3,'#ffffff66');px(c,55,31,2,2,'#ffffff66');
-    drawPerson(c);drawInstrument(c,instruments[state.instrument][1]);
+    const instrument=instruments[state.instrument][1];drawPerson(c);drawInstrument(c,instrument);drawHands(c,instrument);
   }
   function render(){drawAvatar(ctx);drawAvatar(miniCtx);undoBtn.disabled=history.length===0;}
   function setState(key,val){history.push({...state});if(history.length>25)history.shift();state[key]=val;status.textContent='';status.className='status';render();renderChoices();}
@@ -111,14 +174,26 @@
     if(tab==='background'){const d=document.createElement('span');d.className='swatch';d.style.background=optionsFor(tab)[index][1];return d;}
     if(tab==='hair'){rect(x,19,17,26,27,'#d99a67','#27354a');drawHair(x,hairs[index][1],hairColors[index%hairColors.length],'#d99a67');return c;}
     if(tab==='shirt'){rect(x,12,18,40,35,shirts[index][1],'#1b2e49');if(shirts[index][2]==='hoodie')rect(x,22,13,20,15,shirts[index][1],'#1b2e49');if(shirts[index][2]==='stripe')for(let y=26;y<50;y+=7)rect(x,13,y,38,2,'#edf5ff');return c;}
-    rect(x,0,0,64,54,'#fbfaf5');drawInstrument(x,instruments[index][1]);return c;
+    const source=document.createElement('canvas');source.width=64;source.height=64;const sx=source.getContext('2d');sx.imageSmoothingEnabled=false;drawInstrument(sx,instruments[index][1]);x.imageSmoothingEnabled=false;x.drawImage(source,8,28,52,36,2,2,60,50);return c;
   }
   function renderChoices(){const [title,help]=tabInfo[selectedTab];choiceTitle.textContent=title;choiceHelp.textContent=help;choices.innerHTML='';optionsFor(selectedTab).forEach((opt,index)=>{const b=document.createElement('button');b.type='button';b.className='choice'+(state[selectedTab]===index?' is-selected':'');b.setAttribute('aria-pressed',String(state[selectedTab]===index));b.setAttribute('aria-label',opt[0]);b.append(iconFor(selectedTab,index));const label=document.createElement('span');label.textContent=opt[0];b.append(label);b.addEventListener('click',()=>setState(selectedTab,index));choices.append(b);});}
-  function changeTab(tab){selectedTab=tab;document.querySelectorAll('.tab').forEach(b=>{const active=b.dataset.tab===tab;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active));});renderChoices();}
-  document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>changeTab(b.dataset.tab)));
+  function changeTab(tab){selectedTab=tab;document.querySelectorAll('.tab').forEach(b=>{const active=b.dataset.tab===tab;b.classList.toggle('is-active',active);b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});choices.setAttribute('aria-labelledby','tab-'+tab);renderChoices();}
+  const tabs=[...document.querySelectorAll('.tab')];
+  tabs.forEach((b,index)=>{
+    b.addEventListener('click',()=>changeTab(b.dataset.tab));
+    b.addEventListener('keydown',event=>{
+      let next=index;
+      if(event.key==='ArrowRight')next=(index+1)%tabs.length;
+      else if(event.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;
+      else if(event.key==='Home')next=0;
+      else if(event.key==='End')next=tabs.length-1;
+      else return;
+      event.preventDefault();changeTab(tabs[next].dataset.tab);tabs[next].focus();
+    });
+  });
   document.getElementById('randomizeBtn').addEventListener('click',()=>{history.push({...state});state.skin=Math.floor(Math.random()*skins.length);state.hair=Math.floor(Math.random()*hairs.length);state.shirt=Math.floor(Math.random()*shirts.length);state.background=Math.floor(Math.random()*backgrounds.length);status.textContent='A new look is ready. Your instrument stayed the same.';status.className='status';render();renderChoices();});
   undoBtn.addEventListener('click',()=>{if(history.length){state=history.pop();status.textContent='Your last change was undone.';status.className='status';render();renderChoices();}});
   document.getElementById('resetBtn').addEventListener('click',()=>{if(confirm('Start over with the default avatar?')){history.push({...state});state={skin:3,hair:0,shirt:0,instrument:5,background:0};status.textContent='You are back to the default avatar.';status.className='status';render();renderChoices();}});
-  document.getElementById('downloadBtn').addEventListener('click',()=>{try{const out=document.createElement('canvas');out.width=512;out.height=512;const o=out.getContext('2d');o.imageSmoothingEnabled=false;o.drawImage(canvas,0,0,512,512);out.toBlob(blob=>{if(!blob)throw new Error('The browser could not create the image.');const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='band-avatar.png';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),500);status.textContent='Downloaded! Attach band-avatar.png to your Google Classroom assignment.';status.className='status';},'image/png');}catch(err){status.textContent='Sorry—your avatar could not be downloaded. Please try again.';status.className='status error';}});
+  document.getElementById('downloadBtn').addEventListener('click',()=>{try{const out=document.createElement('canvas');out.width=512;out.height=512;const o=out.getContext('2d');if(!o)throw new Error('Canvas is unavailable.');o.imageSmoothingEnabled=false;o.drawImage(canvas,0,0,512,512);out.toBlob(blob=>{if(!blob){status.textContent='Sorry—your avatar could not be downloaded. Please try again.';status.className='status error';return;}const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='band-avatar.png';document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),500);status.textContent='Downloaded! Attach band-avatar.png to your Google Classroom assignment.';status.className='status';},'image/png');}catch(err){status.textContent='Sorry—your avatar could not be downloaded. Please try again.';status.className='status error';}});
   render();renderChoices();
 })();

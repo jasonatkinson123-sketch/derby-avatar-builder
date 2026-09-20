@@ -34,14 +34,14 @@
 
         <section class="controls-panel">
           <div class="tabs" role="tablist" aria-label="Avatar choices">
-            <button class="tab is-active" role="tab" aria-selected="true" aria-controls="choices" data-tab="skin">Skin</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="hair">Hair</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="shirt">Shirt</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="instrument">Instrument</button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="background">Background</button>
+            <button id="tab-skin" class="tab is-active" role="tab" aria-selected="true" aria-controls="choices" data-tab="skin" tabindex="0">Skin</button>
+            <button id="tab-hair" class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="hair" tabindex="-1">Hair</button>
+            <button id="tab-shirt" class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="shirt" tabindex="-1">Shirt</button>
+            <button id="tab-instrument" class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="instrument" tabindex="-1">Instrument</button>
+            <button id="tab-background" class="tab" role="tab" aria-selected="false" aria-controls="choices" data-tab="background" tabindex="-1">Background</button>
           </div>
           <div class="choice-heading"><h2 id="choiceTitle">Choose a skin tone</h2><p id="choiceHelp">Pick the tone that feels most like you.</p></div>
-          <div id="choices" class="choices" role="tabpanel" aria-live="polite"></div>
+          <div id="choices" class="choices" role="tabpanel" aria-labelledby="tab-skin" aria-live="polite"></div>
 
           <div class="actions">
             <div class="secondary-actions">
