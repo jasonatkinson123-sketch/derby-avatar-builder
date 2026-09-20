@@ -82,8 +82,9 @@
     rect(c,9,45,7,17,shirt,'#172b46');rect(c,48,45,7,17,shirt,'#172b46');
     // face
     rect(c,17,13,30,24,skin,shadow);rect(c,19,31,26,8,skin,shadow);
-    px(c,23,24,2,3,'#192233');px(c,39,24,2,3,'#192233');line(c,28,31,36,31,'#6a3d39',1);
     drawHair(c,hairs[state.hair][1],hairColors[state.hair%hairColors.length],skin);
+    // Facial features are drawn last so head coverings never erase them.
+    px(c,23,24,2,3,'#192233');px(c,39,24,2,3,'#192233');line(c,28,31,36,31,'#6a3d39',1);
   }
 
   function brass(c,kind){
