@@ -1,0 +1,428 @@
+{
+  "grid": {
+    "width": 128,
+    "height": 128,
+    "logicalPixelScale": 2,
+    "anchor": [
+      0,
+      0
+    ]
+  },
+  "paletteMarkers": {
+    "skin": [
+      "#d99a67",
+      "#aa6546",
+      "#f1bd91"
+    ],
+    "shirt": [
+      "#557bb5",
+      "#294c82",
+      "#789bd0"
+    ],
+    "hair": [
+      "#2a252a",
+      "#14151b",
+      "#4a424a"
+    ]
+  },
+  "layerOrder": [
+    "background",
+    "hairRear",
+    "poseRear",
+    "clothing",
+    "face",
+    "hairFront",
+    "faceFeatures",
+    "armsRear",
+    "instrument",
+    "armsFront"
+  ],
+  "assets": [
+    {
+      "id": "face-base",
+      "path": "faces/base.png",
+      "layer": "face",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "skin palette",
+      "restrictions": []
+    },
+    {
+      "id": "face-features",
+      "path": "faces/features.png",
+      "layer": "faceFeatures",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "none",
+      "restrictions": [
+        "draw after front hair/headwear for small-size contrast"
+      ]
+    },
+    {
+      "id": "hair-curls-rear",
+      "path": "hair/curls-rear.png",
+      "layer": "hairRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "hair palette",
+      "restrictions": []
+    },
+    {
+      "id": "hair-curls-front",
+      "path": "hair/curls-front.png",
+      "layer": "hairFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "hair palette",
+      "restrictions": []
+    },
+    {
+      "id": "hair-ponytail-rear",
+      "path": "hair/ponytail-rear.png",
+      "layer": "hairRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "hair palette",
+      "restrictions": []
+    },
+    {
+      "id": "hair-ponytail-front",
+      "path": "hair/ponytail-front.png",
+      "layer": "hairFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "hair palette",
+      "restrictions": []
+    },
+    {
+      "id": "hair-locs-rear",
+      "path": "hair/locs-rear.png",
+      "layer": "hairRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "hair palette",
+      "restrictions": []
+    },
+    {
+      "id": "hair-locs-front",
+      "path": "hair/locs-front.png",
+      "layer": "hairFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "hair palette",
+      "restrictions": []
+    },
+    {
+      "id": "hijab-rear",
+      "path": "headwear/hijab-rear.png",
+      "layer": "hairRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "headwear palette",
+      "restrictions": [
+        "does not use natural hair palette"
+      ]
+    },
+    {
+      "id": "hijab-front",
+      "path": "headwear/hijab-front.png",
+      "layer": "hairFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "headwear palette",
+      "restrictions": [
+        "does not use natural hair palette"
+      ]
+    },
+    {
+      "id": "clothing-tee",
+      "path": "clothing/tee.png",
+      "layer": "clothing",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "shirt palette",
+      "restrictions": []
+    },
+    {
+      "id": "clothing-sweatshirt",
+      "path": "clothing/sweatshirt.png",
+      "layer": "clothing",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "shirt palette",
+      "restrictions": []
+    },
+    {
+      "id": "clothing-hoodie",
+      "path": "clothing/hoodie.png",
+      "layer": "clothing",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": "all",
+      "recolor": "shirt palette",
+      "restrictions": []
+    },
+    {
+      "id": "alto-sax-rear",
+      "path": "poses/alto-sax/rear.png",
+      "layer": "poseRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "alto-sax"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "alto-sax-arms-rear",
+      "path": "poses/alto-sax/arms-rear.png",
+      "layer": "armsRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "alto-sax"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    },
+    {
+      "id": "instrument-alto-sax",
+      "path": "instruments/alto-sax.png",
+      "layer": "instrument",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "alto-sax"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "alto-sax-arms-front",
+      "path": "poses/alto-sax/arms-front.png",
+      "layer": "armsFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "alto-sax"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    },
+    {
+      "id": "flute-rear",
+      "path": "poses/flute/rear.png",
+      "layer": "poseRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "flute"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "flute-arms-rear",
+      "path": "poses/flute/arms-rear.png",
+      "layer": "armsRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "flute"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    },
+    {
+      "id": "instrument-flute",
+      "path": "instruments/flute.png",
+      "layer": "instrument",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "flute"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "flute-arms-front",
+      "path": "poses/flute/arms-front.png",
+      "layer": "armsFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "flute"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    },
+    {
+      "id": "electric-bass-rear",
+      "path": "poses/electric-bass/rear.png",
+      "layer": "poseRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "electric-bass"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "electric-bass-arms-rear",
+      "path": "poses/electric-bass/arms-rear.png",
+      "layer": "armsRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "electric-bass"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    },
+    {
+      "id": "instrument-electric-bass",
+      "path": "instruments/electric-bass.png",
+      "layer": "instrument",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "electric-bass"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "electric-bass-arms-front",
+      "path": "poses/electric-bass/arms-front.png",
+      "layer": "armsFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "electric-bass"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    },
+    {
+      "id": "mallets-bells-rear",
+      "path": "poses/mallets-bells/rear.png",
+      "layer": "poseRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "mallets-bells"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "mallets-bells-arms-rear",
+      "path": "poses/mallets-bells/arms-rear.png",
+      "layer": "armsRear",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "mallets-bells"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    },
+    {
+      "id": "instrument-mallets-bells",
+      "path": "instruments/mallets-bells.png",
+      "layer": "instrument",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "mallets-bells"
+      ],
+      "recolor": "none",
+      "restrictions": []
+    },
+    {
+      "id": "mallets-bells-arms-front",
+      "path": "poses/mallets-bells/arms-front.png",
+      "layer": "armsFront",
+      "anchor": [
+        0,
+        0
+      ],
+      "compatiblePoses": [
+        "mallets-bells"
+      ],
+      "recolor": "skin and shirt palettes",
+      "restrictions": []
+    }
+  ]
+}

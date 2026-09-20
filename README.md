@@ -1,26 +1,50 @@
-# Derby Band Avatar Builder
+# Derby Band Avatar Builder — visual proof
 
-A standalone, student-facing 8-bit band-avatar creator. It is a static site: it collects no names or student information, stores nothing, and has no backend. Students download `band-avatar.png` and submit it through the teacher's Google Classroom assignment.
+This branch is a non-production, four-instrument proof of a layered pixel-art system for the student-facing Derby Band Avatar Builder. It collects no names or student information, stores nothing, and has no backend.
 
-Live site: https://jasonatkinson123-sketch.github.io/derby-avatar-builder/
+The production site is intentionally unchanged. Do not merge this proof into `main` or deploy it to GitHub Pages until its artwork has been approved.
 
-Repository: https://github.com/jasonatkinson123-sketch/derby-avatar-builder
+## Proof catalog
+
+- Four skin palettes: light, medium, warm brown, and deep
+- Textured curls, high ponytail, shoulder-length locs, and hijab
+- Three natural hair palettes and three headwear palettes
+- T-shirt, sweatshirt, and hoodie in navy, teal, mustard, and coral
+- Alto saxophone, flute, four-string electric bass, and mallets/bells
+- Turquoise, coral, deep blue, and mint backgrounds
+
+Every avatar is assembled at runtime from transparent PNG layers in `assets/`. Canvas is used only to recolor those controlled layers, composite them, and export a crisp 512 × 512 PNG.
 
 ## Preview locally
 
-Open `index.html` in a modern browser. For the closest behavior to GitHub Pages, serve this folder with any simple local static server.
+From the repository root, run:
 
-## GitHub Pages deployment
+```bash
+python3 -m http.server 8000
+```
 
-This repository is configured for GitHub Pages from `main` at `/ (root)`. Updates pushed to `main` deploy to the live URL above. If you upload this backup to a different repository, choose **Settings → Pages → Deploy from a branch**, then select `main` and `/ (root)`.
+Then open `http://localhost:8000/`. An HTTP server best matches repository-subdirectory hosting.
 
-## Classroom workflow
+## Proof artifacts
 
-Post the site link in a Google Classroom assignment. Each student creates an avatar, chooses **Download Avatar**, then attaches the downloaded PNG to that assignment. The teacher can manually assign each submitted image to the matching Character Cash student card.
+- `proof/proof-contact-sheet.png` — twelve cross-combinations
+- `proof/classroom-cards-96.png` — the same combinations at 96 × 96
+- `proof/classroom-cards-64.png` — the same combinations at 64 × 64
+- `assets/manifest.json` — machine-readable asset metadata
+- `ARTWORK.md` — grid, palette, layer, and extension guidance
+- `TEST_REPORT.md` — verification results and limitations
 
-## Technical notes
+## Regenerating the proof assets
 
-- Plain HTML, CSS, and JavaScript; no dependencies, APIs, analytics, fonts, accounts, or data collection.
-- The 64 × 64 pixel-art source canvas is rendered with nearest-neighbor scaling and exported as a crisp 512 × 512 PNG.
-- Reusable hair, clothing, face, hand, and instrument layers are drawn in `app.js` on a shared 64 × 64 grid. There is no `assets/` folder because the artwork is code-drawn rather than stored as separate images.
-- The controls are keyboard accessible and responsive for Chromebook and smaller screens.
+The checked-in PNG files are the website's runtime assets. Their editable source is `tools/generate_assets.py`, which requires Pillow. Regenerate the library and proof sheets with:
+
+```bash
+python3 tools/generate_assets.py
+python3 tools/render_proof.py
+```
+
+The image in `assets/reference/` is an original AI-assisted art-direction study. It is not displayed by the application and is not used as a flattened avatar.
+
+## Student workflow if approved later
+
+Student builds avatar → downloads `band-avatar.png` → attaches it in Google Classroom → teacher uploads it manually in Character Cash.
