@@ -30,6 +30,9 @@ Then open `http://localhost:8000/`. An HTTP server best matches repository-subdi
 - `proof/proof-contact-sheet.png` — twelve cross-combinations
 - `proof/classroom-cards-96.png` — the same combinations at 96 × 96
 - `proof/classroom-cards-64.png` — the same combinations at 64 × 64
+- `proof/browser-chromebook-1366x768.png` — real Chromium Chromebook-layout evidence
+- `proof/browser-mobile-390x844.png` — real Chromium narrow-screen evidence
+- `proof/verified-band-avatar.png` — PNG produced by the browser download control
 - `assets/manifest.json` — machine-readable asset metadata
 - `ARTWORK.md` — grid, palette, layer, and extension guidance
 - `TEST_REPORT.md` — verification results and limitations
@@ -44,6 +47,10 @@ python3 tools/render_proof.py
 ```
 
 The image in `assets/reference/` is an original AI-assisted art-direction study. It is not displayed by the application and is not used as a flattened avatar.
+
+## Browser verification
+
+The proof branch contains an isolated GitHub Actions workflow that runs only for `codex/verify-avatar-builder`. It starts the static site locally on the runner, tests it in real Chromium, and retains screenshots plus the downloaded PNG as build evidence. It does not deploy the site or alter GitHub Pages.
 
 ## Student workflow if approved later
 

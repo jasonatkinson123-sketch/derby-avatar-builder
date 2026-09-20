@@ -20,21 +20,35 @@ Facial features were separated into a contrast layer after the initial small-car
 
 ## Browser verification
 
-**Blocked; not claimed as complete.** The proof branch was published without merging into `main`, then two independent real-browser routes were attempted:
+The proof passed an isolated real-Chromium verification run on a GitHub-hosted Ubuntu runner. The workflow is restricted to `codex/verify-avatar-builder`; it does not deploy the site, merge branches, or update GitHub Pages.
 
-1. The provided cloud Chrome browser timed out while opening both the commit-pinned RawGitHack preview and an HTMLPreview route. It could not reach a usable page for interaction.
-2. The local Playwright package was available, but its Chromium executable was not installed. Playwright's supported browser download failed from `cdn.playwright.dev` with HTTP 502 / connection refused.
+Successful workflow: [Proof browser verification — run 35518588265](https://github.com/jasonatkinson123-sketch/derby-avatar-builder/actions/runs/35518588265)
 
-Because no real browser could load the proof, the interaction, responsive-layout, accessibility, console, and browser-generated PNG checks remain unverified. The required browser gate therefore did not pass, and this proof must not be merged or deployed to production yet.
+Verified in Chromium:
 
-The checks that did complete were:
+- All twelve representative cross-combinations rendered as twelve distinct canvases.
+- Skin and shirt palette colors reached the composed body parts and pose-specific sleeves.
+- Instrument changes preserved skin, hair/headwear, hair color, and clothing.
+- Randomize Look preserved the selected instrument.
+- Undo restored an instrument change.
+- Start Over opened the accessible confirmation dialog and restored the documented default.
+- Arrow-key tab navigation moved both selection and keyboard focus.
+- The 1366 × 768 layout kept the preview beside the controls with no horizontal overflow.
+- The 390 × 844 layout stacked the preview and controls with no horizontal overflow.
+- Download produced `band-avatar.png` as a valid 512 × 512 PNG.
+- Every exported 4 × 4 pixel block matched its corresponding live-preview pixel, confirming exact nearest-neighbor output.
+- The browser reported zero application console errors or uncaught page errors.
+
+Permanent evidence is checked into `proof/browser-chromebook-1366x768.png`, `proof/browser-mobile-390x844.png`, and `proof/verified-band-avatar.png`.
+
+Additional checks:
 
 - JavaScript syntax validation with `node --check app.js`
 - `git diff --check`
 - Manifest/path completeness for all 29 runtime PNG layers
 - Image format and dimension validation for every runtime asset
 - Deterministic rendering and reopening of twelve cross-combinations at 128, 96, and 64 pixels
-- Manual visual inspection of the twelve-combination contact sheet and the 64-pixel sheet
+- Manual visual inspection of the contact sheet, both classroom-card sheets, and both browser screenshots
 
 ## Visible proof limitations
 
